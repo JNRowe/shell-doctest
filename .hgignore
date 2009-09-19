@@ -1,0 +1,11 @@
+tags
+
+syntax: glob
+*.pyc
+*.swp
+*.tmp
+.DS_Store
+
+syntax: regexp
+(.*/)?(.*\.)?db$
+

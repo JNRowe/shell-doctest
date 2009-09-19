@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+"""
+Shell Doctest module.
+
+:Copyright: (c) 2009, the Shell Doctest Team All rights reserved.
+:license: BSD, see LICENSE for more details.
+"""
+
+import fnmatch
+import os.path
+import sys
+
+import shelldoctest
+
+def _get_file_lists(target_paths):
+    exists = list()
+    no_exists = list()
+    for path in target_paths:
+        #path = os.path.abspath(path)
+        if not os.path.exists(path):
+            no_exists.append(path)
+        elif os.path.isfile(path):
+            exists.append(path)
+        else:
+            for i in os.walk(path):
+                if not i:
+                    continue
+                parent, dirs, files = i
+                for f in files:
+                    exists.append(os.path.sep.join([parent, f]))
+    return exists, no_exists
+
+def test(self, *argv):
+    if not argv:
+        argv = ["."]
+    file_lists, labels = _get_file_lists(argv)
+    if not file_lists:
+        file_lists, _labels = _get_file_lists(["."])
+    for f in file_lists:
+        if not fnmatch.fnmatch(f, "*.py"):
+            continue
+        if f.startswith("./"):
+            f = f[2:]
+        mod_name = os.path.splitext(f)[0].replace(os.path.sep, ".")
+        try:
+            mod = __import__(mod_name, globals(), locals(), [], -1)
+        except ImportError, e:
+            self.status_message("%(mod_name)s:ImportError, %(e)s" % vars(), verbose_level=2)
+            continue
+        else:
+            if "." in mod_name:
+                mod = sys.modules[mod_name]
+            self.status_message("Module:%(f)s" % vars(), verbose_level=2)
+            shelldoctest.testmod(mod, verbose=self.verbose_level>2,
+                                    verbose_level=self.verbose_level, filters=labels)
+
+if __name__ == "__main__":
+    from shelldoctest import base_app
+    base_app.start_app(**vars())
+
