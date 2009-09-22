@@ -104,16 +104,20 @@ def create_app(*attributes):
     attr_dict = dict((m.__name__, m) for m in map(create_method, attributes))
     return type('App', (BaseApp,), attr_dict)
 
-def start_app(*attributes, **vars):
-    app = create_app(*attributes)
-    for k,v in vars.items():
+def start_app(*argv, **kwargv):
+    if not argv and not kwargv:
+        kwargv = sys._getframe(1).f_globals
+    if argv:
+        argv = [i for i in argv if not i.__name__.startswith("_")]
+    app = create_app(*argv)
+    for k,v in kwargv.items():
         try:
             if v.__module__ == "__main__" and not k.startswith("_"):
                 v.__name__ = k
                 app = update_app(app, v)
         except AttributeError:
             pass
-    if "main" not in [a.__name__ for a in attributes] + vars.keys():
+    if "main" not in [a.__name__ for a in argv] + kwargv.keys():
         app.command_main = app.command_help
     app().run()
 

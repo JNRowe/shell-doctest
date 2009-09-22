@@ -56,5 +56,5 @@ def test(self, *argv):
 
 if __name__ == "__main__":
     from shelldoctest import base_app
-    base_app.start_app(**vars())
+    base_app.start_app()
 
