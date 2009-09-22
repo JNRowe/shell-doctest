@@ -10,17 +10,22 @@ import commands
 import doctest
 import inspect
 import re
+import subprocess
 import sys
 
 master = None
 _EXC_WRAPPER = 'system_command("%s")'
 
 def system_command(cmd, shell="bash"):
-    status, output = commands.getstatusoutput('%(shell)s -c "%(cmd)s"' % vars())
-    if status == 0:
-        format = "%(output)s"
+    p = subprocess.Popen('%(shell)s -c "%(cmd)s"' % vars(),
+                         shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    status, stdout, stderr = p.wait(), p.stdout.read().strip(), p.stderr.read().strip()
+    if status == 0 and stderr == "":
+        format = "%(stdout)s"
+    elif stdout != "":
+        format = "[%(status)d]%(stderr)s\n%(stdout)s"
     else:
-        format = "[%(status)d]%(output)s"
+        format = "[%(status)d]%(stderr)s"
     result = format % vars()
     if sys.version_info < (2, 5):
         print result

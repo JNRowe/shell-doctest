@@ -18,19 +18,19 @@ $ LANG=C $
 [...]bash: $: command not found
 
 [#3]
-$ exit 1
-[256]
+$ echo STDOUT; exit 1 STDERR
+[1]bash: line 0: exit: too many arguments
+STDOUT
 
 [#4]
 @localhost
 $ hostname
 . whoami
 . exit 1
-[256]<HOSTNAME>
-<USERNAME>
+[255]ssh: connect to host localhost port 22: Connection refused
 
 [#5]
 root@localhost
 $ REMOTE COMMAND
-[...]Received disconnect from ::1: 2: Too many authentication failures for root
+[255]ssh: connect to host localhost port 22: Connection refused
 """
