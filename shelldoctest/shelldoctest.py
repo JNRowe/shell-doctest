@@ -23,9 +23,9 @@ def system_command(cmd, shell="bash"):
     if status == 0 and stderr == "":
         format = "%(stdout)s"
     elif stdout != "":
-        format = "[%(status)d]%(stderr)s\n%(stdout)s"
+        format = "(%(status)d)%(stderr)s\n%(stdout)s"
     else:
-        format = "[%(status)d]%(stderr)s"
+        format = "(%(status)d)%(stderr)s"
     result = format % vars()
     if sys.version_info < (2, 5):
         print result

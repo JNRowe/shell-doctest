@@ -1,0 +1,130 @@
+Overview
+========
+
+shelldoctest is doctest for shell.
+
+Usage
+-----
+
+test.py::
+
+    #!/usr/bin/env python
+    """
+    $ echo TEST
+    TEST
+    $ LANG=C date -u -r 0
+    Thu Jan  1 00:00:00 UTC 1970
+    """
+
+    if __name__ == "__main__":
+        import shelldoctest
+        shelldoctest.testmod()
+
+Shell Doctest Syntax
+--------------------
+
+Basic::
+
+    $ <COMMAND>
+    <RESPONSE>
+
+Multi Lines::
+
+    $ <COMMAND>
+    . <COMMAND>
+    <RESPONSE>
+    <RESPONSE>
+
+with Label::
+
+    [<LABEL>]
+    $ <COMMAND>
+    <RESPONSE>
+
+Run on Remote Host::
+
+    @<HOSTNAME>
+    $ <COMMAND>
+    <RESPONSE>
+
+    [<LABEL>]
+    @<HOSTNAME>
+    $ <COMMAND>
+    <RESPONSE>
+
+Run by User::
+
+    <USERNAME>@<HOSTNAME>
+    $ <COMMAND>
+    <RESPONSE>
+
+    [<LABEL>]
+    <USERNAME>@<HOSTNAME>
+    $ <COMMAND>
+    <RESPONSE>
+
+Checking STDERR::
+
+    $ <COMMAND>
+    (<RETURNCODE>)<STDERR-RESPONSE>
+    <STDOUT-RESPONSE>
+
+
+Management Tool
+---------------
+
+`shell-doctest` command::
+
+    $ shell-doctest test <PATH-TO-MODULE> ...
+
+    $ shell-doctest test <LABEL> ...
+
+    $ shell-doctest test <PATH-TO-MODULE> ... <LABEL> ...
+
+Examples
+~~~~~~~~
+
+test.py::
+
+    """
+    $ echo TEST
+    TEST
+
+    [#1]
+    $ echo TEST1
+    TEST1
+
+    [#2]
+    $ echo TEST2
+    TEST2
+    """
+
+Run TEST::
+
+    $ shell-doctest test ./test.py
+
+    $ shell-doctest --verbose=2 test ./test.py
+    Module:test.py
+    Label:None
+    Label:#1
+    Label:#2
+
+    $ shell-doctest --verbose=2 test ./test.py #2 #1
+    Module:test.py
+    Label:#2
+    Label:#1
+
+    $ shell-doctest --verbose=3 test ./test.py #2
+    New verbose level is 3
+    Module:manage.py
+    Label:#2
+    Trying:
+        echo TEST2
+    Expecting:
+        TEST2
+    ok
+    1 items passed all tests:
+       1 tests in manage
+    1 tests in 3 items.
+    1 passed and 0 failed.
+    Test passed.

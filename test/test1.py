@@ -15,11 +15,11 @@ Thu Jan  1 00:00:00 UTC 1970
 
 [#2]
 $ LANG=C $
-[...]bash: $: command not found
+(...)bash: $: command not found
 
 [#3]
 $ echo STDOUT; exit 1 STDERR
-[1]bash: line 0: exit: too many arguments
+(1)bash: line 0: exit: too many arguments
 STDOUT
 
 [#4]
@@ -27,10 +27,10 @@ STDOUT
 $ hostname
 . whoami
 . exit 1
-[255]ssh: connect to host localhost port 22: Connection refused
+(255)ssh: connect to host localhost port 22: Connection refused
 
 [#5]
 root@localhost
 $ REMOTE COMMAND
-[255]ssh: connect to host localhost port 22: Connection refused
+(255)ssh: connect to host localhost port 22: Connection refused
 """
