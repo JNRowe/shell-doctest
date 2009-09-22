@@ -10,7 +10,7 @@ from distutils.core import setup
 if __name__ == "__main__":
     setup(
         name='shelldoctest',
-        version='0.1a',
+        version='0.1a1',
         author='Takanao ENDOH',
         author_email='endoh@accense.com',
         maintainer='Takanao ENDOH',
@@ -18,7 +18,7 @@ if __name__ == "__main__":
         url='http://code.google.com/p/shell-doctest/',
         description='doctest for shell',
         download_url='http://code.google.com/p/shell-doctest/',
-        install_requires=[
+        requires=[
             'commandlineapp',
         ],
         classifiers=[
@@ -33,7 +33,7 @@ if __name__ == "__main__":
             'Topic :: Software Development :: Testing',
         ],
         platforms='Any',
-        license='License :: New BSD License',
+        license='New BSD License',
         packages=['shelldoctest'],
         scripts=['shell-doctest'],
     )
