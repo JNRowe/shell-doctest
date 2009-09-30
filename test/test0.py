@@ -7,11 +7,11 @@ Shell Doctest module.
 $ echo TEST
 TEST
 
-[#1]
+[#TEST1]
 $ echo TEST1
 TEST1
 
-[#2]
+[#TEST2]
 $ echo TEST2
 TEST2
 """

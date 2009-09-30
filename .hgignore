@@ -1,7 +1,10 @@
+MANIFEST
+dist
 tags
 
 syntax: glob
 *.pyc
+*.swo
 *.swp
 *.tmp
 .DS_Store
