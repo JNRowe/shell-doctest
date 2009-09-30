@@ -50,7 +50,7 @@ class ShellDocTestParser(doctest.DocTestParser):
             (?:   \[(?P<label>.+)\]\n)?                # PS0 line: label
             (?:   (?P<user>[\w]*)@(?P<host>[\w-]*)\n)? # PS0 line: user@host
             (?:   [ ]* \$ .*)                          # PS1 line
-            (?:\n [ ]* \. .*)*)                        # PS2 lines
+            (?:\n [ ]* \. [ ].*)*)                        # PS2 lines
         \n?
         # Want consists of any non-blank lines that do not start with PS1.
         (?P<want> (?:(?![ ]*$)    # Not a blank line
