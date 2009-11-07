@@ -7,6 +7,7 @@ Shell Doctest module.
 """
 
 import fnmatch
+import imp
 import os.path
 import sys
 
@@ -43,7 +44,7 @@ def test(self, *argv):
             f = f[2:]
         mod_name = os.path.splitext(f)[0].replace(os.path.sep, ".")
         try:
-            mod = __import__(mod_name, globals(), locals(), [], -1)
+            mod = imp.load_source(mod_name, f)
         except ImportError, e:
             self.status_message("%(mod_name)s:ImportError, %(e)s" % vars(), verbose_level=2)
             continue
