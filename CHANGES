@@ -1,0 +1,26 @@
+========================
+Changes in Shell Doctest
+========================
+
+
+Release 0.1a2 (Nov 07, 2009)
+============================
+
+* Run test in non package module.
+
+* #2: Fix don't working ELLIPSIS.
+
+
+Release 0.1a1 (Sep 22, 2009)
+============================
+
+* Fix RETURNCODE syntax.
+
+* stderr handling.
+
+
+Release 0.1a (Sep 19, 2009)
+===========================
+
+* First release.
+

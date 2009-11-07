@@ -10,7 +10,7 @@ from distutils.core import setup
 if __name__ == "__main__":
     setup(
         name='shelldoctest',
-        version='0.1a1',
+        version='0.1a2',
         author='Takanao ENDOH',
         author_email='endoh@accense.com',
         maintainer='Takanao ENDOH',
@@ -18,7 +18,8 @@ if __name__ == "__main__":
         url='http://code.google.com/p/shell-doctest/',
         description='doctest for shell',
         download_url='http://code.google.com/p/shell-doctest/',
-        requires=[
+        install_requires=[
+            'setuptools',
             'commandlineapp',
         ],
         classifiers=[
