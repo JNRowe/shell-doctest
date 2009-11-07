@@ -14,6 +14,4 @@ Label:#TEST4
 Label:#TEST5
 Label:#TEST6
 Label:#TEST7
-Module:test/dir0/non_package_test.py
-Label:#non-package module
 """

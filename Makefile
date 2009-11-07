@@ -4,7 +4,7 @@ help:
 	@echo "  test   to run all tests."
 
 test:
-	./Shell-doctest test test.py
+	./shell-doctest test test.py
 	@echo
 	@echo "Done."
 
