@@ -8,3 +8,6 @@ test:
 	@echo
 	@echo "Done."
 
+release:
+	python setup.py register sdist upload
+
