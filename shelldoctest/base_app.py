@@ -86,27 +86,50 @@ class BaseApp(CommandLineApp):
         except SystemExit, e:
             if str(e) not in ["", "0"]: raise
 
-def create_method(attribute):
+def create_command(attr):
     def method(self, *argv, **kwargv):
-        if attribute.func_code.co_varnames[0] == 'self':
+        if attr.func_code.co_varnames[0] == 'self':
             argv = (self,) + argv
-        return attribute(*argv, **kwargv)
-    method.__name__ = "command_%s" % attribute.__name__
-    method.__doc__ = attribute.__doc__
+        return attr(*argv, **kwargv)
+    method.__name__ = attr.__name__
+    method.__doc__ = attr.__doc__
     return method
 
-def set_method(cls, attribute):
-    method = create_method(attribute)
-    setattr(cls, method.__name__, method)
+def create_option_handler(attr):
+    def method(self):
+        if attr.func_code.co_varnames[0] == 'self':
+            argv = (self,)
+        return attr(*argv)
+    method.__name__ = attr.__name__
+    method.__doc__ = attr.__doc__
+    return method
+
+def create_attribute(attr):
+    creators = dict(
+        command_ = create_command,
+        option_handler_ = create_option_handler,
+    )
+    for prefix, creator in creators.items():
+        if attr.__name__.startswith(prefix):
+            attribute = creator(attr)
+            break
+    else:
+        attr.__name__ = "command_%s" % attr.__name__
+        attribute = create_command(attr)
+    return attribute
+
+def set_attr(cls, attribute):
+    attr = create_attribute(attribute)
+    setattr(cls, attr.__name__, attr)
     return cls
 
 def update_app(app, *attributes):
     for attribute in attributes:
-        app = set_method(app, attribute)
+        app = set_attr(app, attribute)
     return app
 
 def create_app(*attributes):
-    attr_dict = dict((m.__name__, m) for m in map(create_method, attributes))
+    attr_dict = dict((m.__name__, m) for m in map(create_attribute, attributes))
     return type('App', (BaseApp,), attr_dict)
 
 def start_app(*argv, **kwargv):

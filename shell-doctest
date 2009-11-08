@@ -50,12 +50,26 @@ def _pre(argv):
     mod_files = _get_mod_files(file_lists)
     return file_lists, mod_files, labels
 
+def _dry_run(mod, filters):
+    tests = _get_tests(mod, filters=filters)
+    _BEFORE, _AFTER = [len(i) for i in shelldoctest._EXC_WRAPPER.split("%s")]
+    _AFTER = _AFTER + 1
+    for test in tests:
+        for ex in test.examples:
+            print "[%s] %s:%s:" % (ex.label, test.filename, ex.lineno)
+            print "$ %s" % ex.source[_BEFORE:-_AFTER]
+            print "----"
+            print ex.want
+
 def test(self, *argv):
     """Run test.
          %(CMD)s test [module...] [label...]
     """
     file_lists, mod_files, labels = _pre(argv)
     for mod_name, f in mod_files:
+        if self.verbose_level <= 2:
+            _stderr = sys.stderr
+            sys.stderr = StringIO.StringIO()
         try:
             mod = imp.load_source(mod_name, f)
         except ImportError, e:
@@ -63,16 +77,23 @@ def test(self, *argv):
             continue
         else:
             self.status_message("Module:%(f)s" % vars(), verbose_level=2)
-            shelldoctest.testmod(mod, verbose=self.verbose_level>2,
+            if DRY_RUN:
+                _dry_run(mod, filters=labels)
+            else:
+                shelldoctest.testmod(mod, verbose=self.verbose_level>2,
                                     verbose_level=self.verbose_level, filters=labels)
+        finally:
+            if self.verbose_level <= 2:
+                sys.stderr = _stderr
 
 def labels(self, *argv):
     """Displays labels in tests.
     """
     _file_lists, mod_files, _labels = _pre(argv)
     for mod_name, f in mod_files:
-        _stderr = sys.stderr
-        sys.stderr = StringIO.StringIO()
+        if self.verbose_level <= 2:
+            _stderr = sys.stderr
+            sys.stderr = StringIO.StringIO()
         try:
             mod = imp.load_source(mod_name, f)
         except ImportError, e:
@@ -80,13 +101,20 @@ def labels(self, *argv):
             continue
         else:
             self.status_message("Module:%(f)s" % vars(), verbose_level=2)
-            __labels(mod, verbose=self.verbose_level>2,
-                                    verbose_level=self.verbose_level, filters=None)
+            print_labels(self, mod)
         finally:
-            sys.stderr = _stderr
+            if self.verbose_level <= 2:
+                sys.stderr = _stderr
+
+DRY_RUN = False
+def option_handler_dry_run(self):
+    """Turn on dry run mode.
+    """
+    global DRY_RUN
+    DRY_RUN = True
 
 from shelldoctest import *
-def __labels(m=None, name=None, globs=None, verbose=None,
+def _get_tests(m=None, name=None, globs=None, verbose=None,
             report=True, optionflags=doctest.ELLIPSIS, extraglobs=None,
             raise_on_error=False, exclude_empty=False,
             verbose_level=None, filters=None,
@@ -115,6 +143,11 @@ def __labels(m=None, name=None, globs=None, verbose=None,
                                 cmp=lambda x,y: cmp(z[x.label], z[y.label]))
             _tests.append(test)
         tests = _tests
+    return tests
+
+def print_labels(self, mod):
+    tests = _get_tests(mod, verbose=self.verbose_level>2,
+                                    verbose_level=self.verbose_level, filters=None)
     [[sys.stdout.write("[%s] %s:%s:\n" % (ex.label, test.filename, ex.lineno))
         for ex in test.examples if ex.label] for test in tests]
 
