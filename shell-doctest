@@ -51,6 +51,9 @@ def _pre(argv):
     return file_lists, mod_files, labels
 
 def test(self, *argv):
+    """Run test.
+         %(CMD)s test [module...] [label...]
+    """
     file_lists, mod_files, labels = _pre(argv)
     for mod_name, f in mod_files:
         try:
@@ -64,6 +67,8 @@ def test(self, *argv):
                                     verbose_level=self.verbose_level, filters=labels)
 
 def labels(self, *argv):
+    """Displays labels in tests.
+    """
     _file_lists, mod_files, _labels = _pre(argv)
     for mod_name, f in mod_files:
         _stderr = sys.stderr

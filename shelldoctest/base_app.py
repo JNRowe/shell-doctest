@@ -25,6 +25,7 @@ if __name__ == "__main__":
 
 import commands
 import inspect
+import os
 import sys
 
 from commandlineapp import CommandLineApp
@@ -33,8 +34,8 @@ class BaseApp(CommandLineApp):
     def __init__(self, *argv, **kwargv):
         if sys.argv[0].endswith('ipython'):
             sys.argv = sys.argv[1:]
-            self._app_name = sys.argv[0]
             kwargv.update({'command_line_options': sys.argv[1:]})
+        self._app_name = os.path.basename(sys.argv[0])
         super(BaseApp, self).__init__(*argv, **kwargv)
 
     def main(self, *argv):
@@ -46,14 +47,18 @@ class BaseApp(CommandLineApp):
                 raise
             print "ERROR:  sub-command %(sub_command)s not recognized" % vars()
             self.command_help()
+        except TypeError:
+            print "ERROR:  sub-command %(sub_command)s, too many arguments" % vars()
+            self.command_help()
         sys.exit(0)
 
     def command_help(self):
         """Displays sub-command help message.
         """
         prefix = "command_"
+        message_dict = {"CMD": self._app_name}
         methods = inspect.getmembers(self.__class__, inspect.ismethod)
-        print "%s [<options>] sub-command [argv...]\n" % self._app_name
+        print "%(CMD)s [<options>] sub-command [argv...]\n" % message_dict
         print "SUB-COMMANDS:\n"
         for method_name, method in methods:
             if method_name.startswith(prefix):
@@ -66,7 +71,7 @@ class BaseApp(CommandLineApp):
                         print format % arg,
                 else:
                     print ""
-                print " "*8, method.__doc__ or ""
+                print " "*8, (method.__doc__ or "") % message_dict
 
     def command_main(self):
         raise NotImplementedError
