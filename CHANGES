@@ -3,8 +3,14 @@ Changes in Shell Doctest
 ========================
 
 
-Release 0.1a3 (in development)
-==============================
+Release 0.1 (Nov 08, 2009)
+==========================
+
+* Implemented labels, clean sub-commands and dry-run mode.
+
+* Enable non python file.
+
+* Filtering filename, `test*.py` or `test*.sh` only.
 
 
 Release 0.1a2 (Nov 07, 2009)

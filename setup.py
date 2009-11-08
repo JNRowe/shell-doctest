@@ -10,7 +10,7 @@ from distutils.core import setup
 if __name__ == "__main__":
     setup(
         name='shelldoctest',
-        version='0.1a2',
+        version='0.1',
         author='Takanao ENDOH',
         author_email='endoh@accense.com',
         maintainer='Takanao ENDOH',
