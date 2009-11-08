@@ -36,7 +36,7 @@ class ShellExample(doctest.Example):
     def __init__(self, source, want, exc_msg=None, lineno=0, indent=0,
                      label=None,
                      options=None):
-        doctest.Example.__init__(self, source, want, exc_msg=None, lineno=0, indent=0,
+        doctest.Example.__init__(self, source, want, exc_msg=None, lineno=lineno, indent=indent,
                      options=None)
         self.label = label
 
