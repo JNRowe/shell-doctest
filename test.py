@@ -4,6 +4,8 @@ $ ./shell-doctest --verbose=2 test test
 Module:test/test-issues.py
 Label:issue2
 Label:None
+Module:test/test.sh.py
+Label:#non-python-file
 Module:test/test0.py
 Label:None
 Label:#TEST1
@@ -23,9 +25,10 @@ $ ./shell-doctest --dry-run test '#TEST1'|wc
 [#labels command]
 $ ./shell-doctest labels
 [#test command] test.py:1:
-[#--dry-run option] test.py:18:
-[#labels command] test.py:22:
+[#--dry-run option] test.py:20:
+[#labels command] test.py:24:
 [issue2] test/test-issues.py:1:
+[#non-python-file] test/test.sh.py:1:
 [#TEST1] test/test0.py:9:
 [#TEST2] test/test0.py:13:
 [#TEST3] test/test1.py:9:

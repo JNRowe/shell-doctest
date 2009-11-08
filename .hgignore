@@ -5,6 +5,7 @@ tags
 
 syntax: glob
 *.pyc
+*.sh.py
 *.swo
 *.swp
 *.tmp

@@ -47,9 +47,6 @@ class BaseApp(CommandLineApp):
                 raise
             print "ERROR:  sub-command %(sub_command)s not recognized" % vars()
             self.command_help()
-        except TypeError:
-            print "ERROR:  sub-command %(sub_command)s, too many arguments" % vars()
-            self.command_help()
         sys.exit(0)
 
     def command_help(self):

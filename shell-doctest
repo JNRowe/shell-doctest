@@ -13,6 +13,8 @@ import os.path
 
 import shelldoctest
 
+TMP_SHELL_EXT = ".sh.py"
+
 def _get_file_lists(target_paths):
     exists = list()
     no_exists = list()
@@ -32,13 +34,23 @@ def _get_file_lists(target_paths):
 
 def _get_mod_files(file_lists):
     results = list()
+    to_mod_name = lambda x: os.path.splitext(x)[0].replace(os.path.sep, ".")
     for f in file_lists:
-        if not fnmatch.fnmatch(os.path.basename(f), "test*.py"):
-            continue
         if f.startswith("./"):
             f = f[2:]
-        mod_name = os.path.splitext(f)[0].replace(os.path.sep, ".")
-        results.append((mod_name, f))
+        _f = os.path.basename(f)
+        if _f.endswith(TMP_SHELL_EXT):
+            continue
+        elif fnmatch.fnmatch(_f, "test*.py"):
+            results.append((to_mod_name(f), f))
+        elif fnmatch.fnmatch(_f, "test*.sh"):
+            tmp_name = "%s.py" % f
+            tmp_file = open(tmp_name, "w")
+            tmp_file.write('"""\n')
+            tmp_file.write(open(f).read())
+            tmp_file.write('"""\n')
+            tmp_file.close()
+            results.append((to_mod_name(f), tmp_name))
     return results
 
 def _pre(argv):
