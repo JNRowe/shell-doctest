@@ -113,7 +113,7 @@ def labels(self, *argv):
             continue
         else:
             self.status_message("Module:%(f)s" % vars(), verbose_level=2)
-            print_labels(self, mod)
+            _print_labels(self, mod)
         finally:
             if self.verbose_level <= 2:
                 sys.stderr = _stderr
@@ -157,7 +157,7 @@ def _get_tests(m=None, name=None, globs=None, verbose=None,
         tests = _tests
     return tests
 
-def print_labels(self, mod):
+def _print_labels(self, mod):
     tests = _get_tests(mod, verbose=self.verbose_level>2,
                                     verbose_level=self.verbose_level, filters=None)
     [[sys.stdout.write("[%s] %s:%s:\n" % (ex.label, test.filename, ex.lineno))
