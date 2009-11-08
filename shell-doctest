@@ -9,7 +9,6 @@ Shell Doctest module.
 import fnmatch
 import imp
 import os.path
-import sys
 
 import shelldoctest
 
@@ -17,7 +16,6 @@ def _get_file_lists(target_paths):
     exists = list()
     no_exists = list()
     for path in target_paths:
-        #path = os.path.abspath(path)
         if not os.path.exists(path):
             no_exists.append(path)
         elif os.path.isfile(path):
@@ -49,8 +47,6 @@ def test(self, *argv):
             self.status_message("%(mod_name)s:ImportError, %(e)s" % vars(), verbose_level=2)
             continue
         else:
-            if "." in mod_name:
-                mod = sys.modules[mod_name]
             self.status_message("Module:%(f)s" % vars(), verbose_level=2)
             shelldoctest.testmod(mod, verbose=self.verbose_level>2,
                                     verbose_level=self.verbose_level, filters=labels)
