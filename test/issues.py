@@ -1,4 +1,5 @@
 """
+[issue2]
 $ echo TEST1
 . # doctest: +ELLIPSIS
 T...ST1
