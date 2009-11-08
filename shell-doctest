@@ -163,6 +163,19 @@ def _print_labels(self, mod):
     [[sys.stdout.write("[%s] %s:%s:\n" % (ex.label, test.filename, ex.lineno))
         for ex in test.examples if ex.label] for test in tests]
 
+def clean(self, *argv):
+    """Remove `test*.sh.py` files.
+    """
+    if not argv:
+        argv = ["."]
+    file_lists, labels = _get_file_lists(argv)
+    for f in file_lists:
+        if f.endswith(TMP_SHELL_EXT):
+            print "Removed %(f)s" % vars()
+            if DRY_RUN:
+                continue
+            os.remove(f)
+
 if __name__ == "__main__":
     from shelldoctest import base_app
     base_app.start_app()
