@@ -33,7 +33,7 @@ def _get_file_lists(target_paths):
 def _get_mod_files(file_lists):
     results = list()
     for f in file_lists:
-        if not fnmatch.fnmatch(f, "*.py"):
+        if not fnmatch.fnmatch(os.path.basename(f), "test*.py"):
             continue
         if f.startswith("./"):
             f = f[2:]

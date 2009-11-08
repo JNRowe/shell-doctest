@@ -1,7 +1,7 @@
 """
 [#test command]
 $ ./shell-doctest --verbose=2 test test
-Module:test/issues.py
+Module:test/test-issues.py
 Label:issue2
 Label:None
 Module:test/test0.py
@@ -25,7 +25,7 @@ $ ./shell-doctest labels
 [#test command] test.py:1:
 [#--dry-run option] test.py:18:
 [#labels command] test.py:22:
-[issue2] test/issues.py:1:
+[issue2] test/test-issues.py:1:
 [#TEST1] test/test0.py:9:
 [#TEST2] test/test0.py:13:
 [#TEST3] test/test1.py:9:
