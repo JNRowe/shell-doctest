@@ -23,7 +23,7 @@ if __name__ == "__main__":
             'commandlineapp',
         ],
         classifiers=[
-            'Development Status :: 3 - Alpha',
+            'Development Status :: 4 - Bata',
             'Environment :: Console',
             'Intended Audience :: Developers',
             'Intended Audience :: System Administrators',
