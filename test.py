@@ -17,6 +17,8 @@ Label:#TEST4
 Label:#TEST5
 Label:#TEST6
 Label:#TEST7
+Label:#@IP-ADDR
+Label:#USER@IP-ADDR
 
 [#--dry-run option]
 $ ./shell-doctest --dry-run test '#TEST1'|wc
@@ -25,8 +27,8 @@ $ ./shell-doctest --dry-run test '#TEST1'|wc
 [#labels command]
 $ ./shell-doctest labels
 [#test command] test.py:1:
-[#--dry-run option] test.py:20:
-[#labels command] test.py:24:
+[#--dry-run option] test.py:22:
+[#labels command] test.py:26:
 [issue2] test/test-issues.py:1:
 [#non-python-file] test/test.sh.py:1:
 [#TEST1] test/test0.py:9:
@@ -36,4 +38,6 @@ $ ./shell-doctest labels
 [#TEST5] test/test1.py:19:
 [#TEST6] test/test1.py:24:
 [#TEST7] test/test1.py:31:
+[#@IP-ADDR] test/test1.py:36:
+[#USER@IP-ADDR] test/test1.py:43:
 """

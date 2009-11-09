@@ -48,7 +48,7 @@ class ShellDocTestParser(doctest.DocTestParser):
         (?P<source>
             (?:^  (?P<indent> [ ]*))                   # PS0 line: indent
             (?:   \[(?P<label>.+)\]\n)?                # PS0 line: label
-            (?:   (?P<user>[\w]*)@(?P<host>[\w-]*)\n)? # PS0 line: user@host
+            (?:   (?P<user>[\w]*)@(?P<host>[\w\.-]*)\n)? # PS0 line: user@host
             (?:   [ ]* \$ .*)                          # PS1 line
             (?:\n [ ]* \. [ ].*)*)                        # PS2 lines
         \n?

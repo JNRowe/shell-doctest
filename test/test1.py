@@ -33,4 +33,16 @@ $ hostname
 root@localhost
 $ REMOTE COMMAND
 (255)ssh: connect to host localhost port 22: Connection refused
+
+[#@IP-ADDR]
+@127.0.0.1
+$ hostname
+. whoami
+. exit 1
+(255)ssh: connect to host 127.0.0.1 port 22: Connection refused
+
+[#USER@IP-ADDR]
+root@127.0.0.1
+$ REMOTE COMMAND
+(255)ssh: connect to host 127.0.0.1 port 22: Connection refused
 """
