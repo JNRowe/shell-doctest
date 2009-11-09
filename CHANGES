@@ -2,6 +2,11 @@
 Changes in Shell Doctest
 ========================
 
+Release 0.1.1 (Nov 09, 2009)
+============================
+
+* Fix: Remotr Host by IP Address v4.
+
 
 Release 0.1 (Nov 08, 2009)
 ==========================
