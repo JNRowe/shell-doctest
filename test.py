@@ -41,3 +41,37 @@ $ ./shell-doctest labels
 [#@IP-ADDR] test/test1.py:36:
 [#USER@IP-ADDR] test/test1.py:43:
 """
+
+import doctest
+import unittest
+
+from shelldoctest.shellunittest import Connection, TestCase
+from shelldoctest.shellunittest import DocTestFailure, ResponseTimeout
+
+host = "localhost:22"
+
+class MyTest(TestCase):
+    c = Connection(host)
+
+    def test_raise_DocTestFailure(self):
+        self.assertRaises(DocTestFailure, self.assertOutput, self.c, "pwd", "")
+
+class MyTest2(TestCase):
+    c = Connection(host)
+    c1 = Connection(host)
+
+    def test_muluti_connections(self):
+        self.assertOutput(self.c, "pwd", "/.../...\n", doctest.ELLIPSIS)
+        self.c("cd /", None)
+        self.assertOutput(self.c1, "pwd", "/.../...\n", doctest.ELLIPSIS)
+        self.assertOutput(self.c, "pwd", "/\n")
+
+    def test_remake_connection(self):
+        self.assertOutput(self.c, "pwd", "/.../...\n", doctest.ELLIPSIS)
+
+    def test_timeout(self):
+        self.assertRaises(ResponseTimeout, self.c, "sleep 10", "dummy", timeout=0.01)
+
+if __name__ == "__main__":
+    unittest.main()
+

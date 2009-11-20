@@ -5,6 +5,7 @@ help:
 
 test:
 	./shell-doctest --debug test test.py
+	python test.py
 	@echo
 	@echo "Done."
 

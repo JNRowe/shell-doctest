@@ -6,3 +6,4 @@ Shell Doctest module.
 """
 
 from shelldoctest import *
+
