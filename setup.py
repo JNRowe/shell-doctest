@@ -24,7 +24,7 @@ if __name__ == "__main__":
             'paramiko',
         ],
         classifiers=[
-            'Development Status :: 4 - Bata',
+            'Development Status :: 4 - Beta',
             'Environment :: Console',
             'Intended Audience :: Developers',
             'Intended Audience :: System Administrators',
