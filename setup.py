@@ -16,7 +16,7 @@ if __name__ == "__main__":
         maintainer='Takanao ENDOH',
         maintainer_email='djmchl@gmail.com',
         url='http://code.google.com/p/shell-doctest/',
-        description='doctest for shell',
+        description='Doctest/UnitTest for shell',
         download_url='http://code.google.com/p/shell-doctest/',
         install_requires=[
             'setuptools',

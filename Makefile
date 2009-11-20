@@ -9,6 +9,9 @@ test:
 	@echo
 	@echo "Done."
 
+manifest:
+	python setup.py sdist --manifest-only
+
 release:
 	python setup.py register sdist upload
 
