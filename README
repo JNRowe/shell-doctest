@@ -1,7 +1,12 @@
+========
 Overview
 ========
 
-shelldoctest is doctest for shell.
+shelldoctest is Doctest/UnitTest for shell.
+
+
+Doctest for shell
+=================
 
 Usage
 -----
@@ -127,3 +132,26 @@ Run TEST::
     1 tests in 3 items.
     1 passed and 0 failed.
     Test passed.
+
+
+UnitTest
+========
+
+::
+
+    from doctest import ELLIPSIS
+
+    from shelldoctest.shellunittest import Connection, TestCase
+
+    host = "localhost:22"
+
+    class MyTest(TestCase):
+        c1 = Connection(host)
+        c2 = Connection(host)
+
+        def test(self):
+            self.assertOutput(self.c1, "pwd", "/.../...\n", ELLIPSIS)
+            self.c1("cd /", None)
+            self.assertOutput(self.c2, "pwd", "/.../...\n", ELLIPSIS)
+            self.assertOutput(self.c1, "pwd", "/\n")
+

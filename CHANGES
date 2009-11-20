@@ -2,6 +2,13 @@
 Changes in Shell Doctest
 ========================
 
+
+Release 0.2 (Nov 20, 2009)
+==========================
+
+* Implemented UnitTest for Shell Doctest.
+
+
 Release 0.1.1 (Nov 09, 2009)
 ============================
 
