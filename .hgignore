@@ -1,6 +1,7 @@
 MANIFEST
 build
 dist
+doc/_build
 tags
 
 syntax: glob

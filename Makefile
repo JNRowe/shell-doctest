@@ -15,3 +15,6 @@ manifest:
 release:
 	python setup.py register sdist upload
 
+serve:
+	cd doc; make serve
+
