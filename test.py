@@ -5,6 +5,7 @@ Module:test/test-issues.py
 Label:issue2
 Label:None
 Module:test/test.sh.py
+Label:Example
 Label:#non-python-file
 Module:test/test0.py
 Label:None
@@ -27,10 +28,11 @@ $ ./shell-doctest --dry-run test '#TEST1'|wc
 [#labels command]
 $ ./shell-doctest labels
 [#test command] test.py:1:
-[#--dry-run option] test.py:22:
-[#labels command] test.py:26:
+[#--dry-run option] test.py:23:
+[#labels command] test.py:27:
 [issue2] test/test-issues.py:1:
-[#non-python-file] test/test.sh.py:1:
+[Example] test/test.sh.py:1:
+[#non-python-file] test/test.sh.py:8:
 [#TEST1] test/test0.py:9:
 [#TEST2] test/test0.py:13:
 [#TEST3] test/test1.py:9:
@@ -45,6 +47,7 @@ $ ./shell-doctest labels
 import doctest
 import unittest
 
+import shelldoctest.shellunittest
 from shelldoctest.shellunittest import Connection, TestCase
 from shelldoctest.shellunittest import DocTestFailure, ResponseTimeout
 
@@ -71,6 +74,16 @@ class MyTest2(TestCase):
 
     def test_timeout(self):
         self.assertRaises(ResponseTimeout, self.c, "sleep 10", "dummy", timeout=0.01)
+
+class Example(shelldoctest.shellunittest.TestCase):
+    c1 = shelldoctest.shellunittest.Connection(host)
+    c2 = shelldoctest.shellunittest.Connection(host)
+
+    def test(self):
+        self.assertOutput(self.c1, "pwd", "/.../...\n", doctest.ELLIPSIS)
+        self.c1("cd /", None)
+        self.assertOutput(self.c2, "pwd", "/.../...\n", doctest.ELLIPSIS)
+        self.assertOutput(self.c1, "pwd", "/\n")
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,7 +5,3 @@ shelldoctest/__init__.py
 shelldoctest/base_app.py
 shelldoctest/shelldoctest.py
 shelldoctest/shellunittest.py
-test/test-issues.py
-test/test.sh.py
-test/test0.py
-test/test1.py
